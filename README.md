@@ -38,3 +38,7 @@ docker compose run --rm pgcli
 ```
 
 >_**Note**: You might notice with docker compose up, pgcli starts alongside your other services but exits immediately. This is normal. Containers exit when they don't have a running process to keep it alive._
+
+
+## License
+This project is licensed under the MIT License. See the [LICENSE file](./LICENSE) for details.
