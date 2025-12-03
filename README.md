@@ -7,8 +7,37 @@
 Run a container with the [postgres connection string](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING-URIS).
 
 ```bash
-docker run --rm -it devpies/pgcli postgres://user:pass@host:port/database
+docker run --rm -it --network some-network devpies/pgcli postgres://user:pass@host:port/database
 ```
+
+### Examples
+
+#### Connecting from the same network
+
+```bash
+# Create network
+docker network create some-network
+# Run postgres
+docker run --name pg-db --detach --network some-network -e POSTGRES_PASSWORD=secret -p 5432:5432 postgres:18-alpine
+# Run devpies/pgcli
+docker run --rm --network some-network -it devpies/pgcli postgres://postgres:secret@pg-db:5432/postgres  
+```
+#### Using host network 
+
+```bash
+# Run postgres
+docker run --network host -d -e POSTGRES_PASSWORD=secret postgres:18-alpine
+# Run devpies/pgcli
+docker run --rm -it --network host devpies/pgcli postgres://postgres:secret@localhost:5432/postgres
+
+# Or use Docker Desktop's "host.docker.internal"
+
+# Run postgres
+docker run -d -e POSTGRES_PASSWORD=secret -p 5432:5432 postgres:18-alpine
+# Run devpies/pgcli
+docker run --rm -it devpies/pgcli postgres://postgres:secret@host.docker.internal:5432/postgres
+```
+
 
 ## URL Encoding Passwords If Neccessary 
 
