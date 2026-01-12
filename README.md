@@ -43,7 +43,7 @@ docker run --rm -it devpies/pgcli postgres://postgres:secret@host.docker.interna
 
 `devpies/pgcli` can handle passwords in both encoded and unencoded forms, reducing the risk of connection errors due to improper encoding.
 
-## Approach
+### Approach
 1. The image first tries to connect using the password as provided, assuming it doesn’t need encoding. This avoids unnecessary encoding when it’s not needed. 
 
 2. If the initial connection fails, the image then URL-encodes the password and retries the connection, ensuring that special characters in the password are correctly handled.
